@@ -34,6 +34,11 @@
 # Compiled Files
 */output/
 
+# IDE Specific
+.vscode/
+.idea/
+cmake-build-debug/
+
 # Build directories
 build.sh
 /build/
