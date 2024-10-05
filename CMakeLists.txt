@@ -7,8 +7,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Add the executable and source files (including glad.c for GLAD)
 add_executable(physics_simulator
-    src/Main.cpp
-    src/glad.c
+    src/main.cpp
+    src/third_party/glad.c
+    src/window_manager/window.cpp
 )
 
 # Add include directories for GLAD and GLFW
@@ -29,5 +30,5 @@ target_link_libraries(physics_simulator
     "-framework Cocoa"
     "-framework IOKit"
     "-framework CoreFoundation"
-    "-framework AppKit"    # Necessary for windowing
+    "-framework AppKit"
 )
