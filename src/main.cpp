@@ -6,7 +6,7 @@
 int main()
 {
     WindowManager window_manager;
-    GLFWwindow *window = window_manager.createWindow(800, 600, "LearnOpenGL");
+    GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE);
     InputManager input_manager;
 
     if (!window)

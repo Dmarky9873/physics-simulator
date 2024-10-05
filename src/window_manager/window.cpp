@@ -1,6 +1,8 @@
 #include "window.h"
 #include <iostream>
 
+const char *WindowManager::DEFAULT_TITLE = "Physics Sim";
+
 GLFWwindow *WindowManager::createWindow(int width, int height, const char *title)
 {
     // Initialize GLFW

@@ -6,6 +6,11 @@
 class InputManager
 {
 public:
+    /**
+     * @brief Processes input from the user
+     *
+     * @param window The window to process input for
+     */
     void process_input(GLFWwindow *window);
 };
 

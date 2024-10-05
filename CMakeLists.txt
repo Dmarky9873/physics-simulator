@@ -33,3 +33,6 @@ target_link_libraries(physics_simulator
     "-framework CoreFoundation"
     "-framework AppKit"
 )
+
+# Set macOS deployment target
+set(CMAKE_OSX_DEPLOYMENT_TARGET "15.0")
