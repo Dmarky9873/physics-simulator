@@ -25,15 +25,26 @@ GLFWwindow *WindowManager::createWindow(int width, int height, const char *title
         return nullptr;
     }
 
+    // Make the window's context the current context
     glfwMakeContextCurrent(window);
 
+    // Load GLAD
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "Failed to initialize GLAD" << std::endl;
         return nullptr;
     }
 
+    // Update viewport size when the window is resized
+    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
     return window;
+}
+
+void WindowManager::framebuffer_size_callback(GLFWwindow *window, int width, int height)
+{
+    // Set the viewport size to the new window size
+    glViewport(0, 0, width, height);
 }
 
 void WindowManager::terminate()
