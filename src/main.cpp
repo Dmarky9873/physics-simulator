@@ -1,14 +1,13 @@
 #include <iostream>
 
 #include "window_manager/window.h"
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-void processInput(GLFWwindow *window);
+#include "input_manager/input.h"
 
 int main()
 {
     WindowManager window_manager;
     GLFWwindow *window = window_manager.createWindow(800, 600, "LearnOpenGL");
+    InputManager input_manager;
 
     if (!window)
     {
@@ -18,7 +17,7 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         // Input
-        processInput(window);
+        input_manager.process_input(window);
 
         // Rendering commands
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -32,10 +31,4 @@ int main()
     window_manager.terminate();
 
     return 0;
-}
-
-void processInput(GLFWwindow *window)
-{
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
 }
