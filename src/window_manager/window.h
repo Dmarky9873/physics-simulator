@@ -25,12 +25,12 @@ public:
     /**
      * @brief The default width of the window
      */
-    static const int DEFAULT_WIDTH = 800;
+    static const unsigned int DEFAULT_WIDTH = 800;
 
     /**
      * @brief The default height of the window
      */
-    static const int DEFAULT_HEIGHT = 600;
+    static const unsigned int DEFAULT_HEIGHT = 600;
 
     /**
      * @brief The title of the window
