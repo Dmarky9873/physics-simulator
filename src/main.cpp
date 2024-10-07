@@ -15,7 +15,6 @@ int main()
 {
     WindowManager window_manager;
     GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE);
-    InputManager input_manager;
     BasicRenderer renderer;
     std::vector<float> vertices = {
         // first triangle
@@ -36,7 +35,33 @@ int main()
     while (!glfwWindowShouldClose(window))
     {
         // Input
-        input_manager.process_input(window);
+        if (InputManager::is_key_pressed(window, GLFW_KEY_ESCAPE))
+        {
+            glfwSetWindowShouldClose(window, true);
+        }
+
+        if (InputManager::is_key_pressed(window, GLFW_KEY_SPACE))
+        {
+            vertices = {
+                // first triangle
+                0.5f, 0.5f, 0.0f,  // top right
+                0.5f, -0.5f, 0.0f, // bottom right
+                -0.5f, 0.5f, 0.0f, // top left
+            };
+        }
+        else
+        {
+            vertices = {
+                // first triangle
+                0.5f, 0.5f, 0.0f,   // top right
+                0.5f, -0.5f, 0.0f,  // bottom right
+                -0.5f, 0.5f, 0.0f,  // top left
+                                    // second triangle
+                0.5f, -0.5f, 0.0f,  // bottom right
+                -0.5f, -0.5f, 0.0f, // bottom left
+                -0.5f, 0.5f, 0.0f   // top left
+            };
+        }
 
         // Rendering commands
 

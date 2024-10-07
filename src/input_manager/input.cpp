@@ -1,9 +1,10 @@
 #include "input.h"
 
-void InputManager::check_for_keypress(GLFWwindow *window, uint8_t key)
+bool InputManager::is_key_pressed(GLFWwindow *window, int key)
 {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+    if (glfwGetKey(window, key) == GLFW_PRESS)
     {
-        glfwSetWindowShouldClose(window, true);
+        return true;
     }
+    return false;
 }

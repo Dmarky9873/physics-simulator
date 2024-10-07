@@ -2,10 +2,6 @@
 
 BasicRenderer::BasicRenderer()
 {
-    // Set the background color
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
     // Initialize the shader program, vertex buffer object, and vertex array object
     program_init();
     VBO_init();
@@ -56,6 +52,10 @@ void BasicRenderer::set_vertices(const std::vector<float> &vertices)
 
 void BasicRenderer::render(bool is_wireframe)
 {
+    // Set the background color
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     // Set the polygon mode to wireframe or fill based on desire
     if (is_wireframe)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

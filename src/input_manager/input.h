@@ -11,7 +11,7 @@ public:
      *
      * @param window The window to process input for
      */
-    void check_for_keypress(GLFWwindow *window, uint8_t key);
+    static bool is_key_pressed(GLFWwindow *window, int key);
 };
 
 #endif
