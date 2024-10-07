@@ -12,6 +12,7 @@ add_executable(physics_simulator
     src/window_manager/window.cpp
     src/input_manager/input.cpp
     src/graphics/shader/shader/shader.cpp
+    src/graphics/shader/program/shader_program.cpp
 )
 
 # Add include directories for GLAD and GLFW

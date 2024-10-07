@@ -3,6 +3,7 @@
 #include "window_manager/window.h"
 #include "input_manager/input.h"
 #include "graphics/shader/shader/shader.h"
+#include "graphics/shader/program/shader_program.h"
 
 #define VERTEX_SHADER_PATH "/src/graphics/shader/src/vertex_shader.vert"
 #define FRAGMENT_SHADER_PATH "/src/graphics/shader/src/fragment_shader.frag"
@@ -71,16 +72,7 @@ void draw()
 
     Shader fragment_shader(FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER);
 
-    unsigned int shader_program;
-    shader_program = glCreateProgram();
-
-    glAttachShader(shader_program, vertex_shader.get_shader());
-    glAttachShader(shader_program, fragment_shader.get_shader());
-    glLinkProgram(shader_program);
-
-    glUseProgram(shader_program);
-    glDeleteShader(vertex_shader.get_shader());
-    glDeleteShader(fragment_shader.get_shader());
+    ShaderProgram shader_program({vertex_shader, fragment_shader});
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
@@ -101,7 +93,7 @@ void draw()
     // 4. draw the object
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // wireframe mode
     // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); // fill mode
-    glUseProgram(shader_program);
+    glUseProgram(shader_program.get_program());
     glBindVertexArray(VAO);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);

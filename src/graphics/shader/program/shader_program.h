@@ -1,11 +1,10 @@
 #ifndef SHADER_PROGRAM_H
 #define SHADER_PROGRAM_H
 
+#include "../shader/shader.h"
+#include <vector>
 #include <string>
 #include <glad/glad.h>
-#include <filesystem>
-#include <fstream>
-#include <sstream>
 #include <iostream>
 
 /**
@@ -14,11 +13,17 @@
 class ShaderProgram
 {
 public:
-    ShaderProgram(const std::string vertex_shader_path, const std::string fragment_shader_path);
+    ShaderProgram(const std::vector<Shader> &shaders);
+
+    unsigned int get_program() { return program; }
+
+private:
     // Shader program ID
     unsigned int program;
 
-private:
+    std::vector<Shader> shaders;
+
+    void create_program();
 };
 
 #endif
