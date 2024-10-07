@@ -1,6 +1,6 @@
 #include "shader_program.h"
 
-ShaderProgram::ShaderProgram(const std::vector<Shader> &shaders)
+ShaderProgram::ShaderProgram(const std::vector<unsigned int> &shaders)
 {
     // Assign the shaders to the class variable and create the program
     this->shaders = shaders;
@@ -13,9 +13,9 @@ void ShaderProgram::create_program()
     program = glCreateProgram();
 
     // Attach each shader to the program
-    for (Shader shader : shaders)
+    for (unsigned int shader : shaders)
     {
-        glAttachShader(program, shader.get_shader());
+        glAttachShader(program, shader);
     }
 
     // Link the program and set it as the current program
@@ -23,8 +23,8 @@ void ShaderProgram::create_program()
     glUseProgram(program);
 
     // Delete the shaders
-    for (Shader shader : shaders)
+    for (unsigned int shader : shaders)
     {
-        glDeleteShader(shader.get_shader());
+        glDeleteShader(shader);
     }
 }
