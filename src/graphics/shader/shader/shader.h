@@ -24,12 +24,14 @@ public:
      */
     Shader(const std::string shader_path, const u_int16_t shader_type);
 
+    unsigned int get_shader() { return shader; }
+
+private:
     /**
      * @brief The shader's program ID
      */
     unsigned int shader;
 
-private:
     /**
      * @brief The path to the shader source code file
      */

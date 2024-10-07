@@ -74,13 +74,13 @@ void draw()
     unsigned int shader_program;
     shader_program = glCreateProgram();
 
-    glAttachShader(shader_program, vertex_shader.shader);
-    glAttachShader(shader_program, fragment_shader.shader);
+    glAttachShader(shader_program, vertex_shader.get_shader());
+    glAttachShader(shader_program, fragment_shader.get_shader());
     glLinkProgram(shader_program);
 
     glUseProgram(shader_program);
-    glDeleteShader(vertex_shader.shader);
-    glDeleteShader(fragment_shader.shader);
+    glDeleteShader(vertex_shader.get_shader());
+    glDeleteShader(fragment_shader.get_shader());
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
