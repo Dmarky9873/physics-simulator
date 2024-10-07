@@ -2,7 +2,10 @@
 
 #include "window_manager/window.h"
 #include "input_manager/input.h"
-#include "graphics/shader/shader.h"
+#include "graphics/shader/shader/shader.h"
+
+#define VERTEX_SHADER_PATH "/src/graphics/shader/src/vertex_shader.vert"
+#define FRAGMENT_SHADER_PATH "/src/graphics/shader/src/fragment_shader.frag"
 
 void draw();
 
@@ -64,9 +67,9 @@ void draw()
 
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-    Shader vertex_shader("/shaders/vertex_shader.vert", GL_VERTEX_SHADER);
+    Shader vertex_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER);
 
-    Shader fragment_shader("/shaders/fragment_shader.frag", GL_FRAGMENT_SHADER);
+    Shader fragment_shader(FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER);
 
     unsigned int shader_program;
     shader_program = glCreateProgram();
