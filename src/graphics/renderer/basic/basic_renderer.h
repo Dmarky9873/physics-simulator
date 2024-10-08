@@ -43,6 +43,13 @@ public:
      */
     void set_vertices(const std::vector<std::vector<float>> &vertices);
 
+    /**
+     * @brief Changes the color of the object being rendered
+     *
+     * @param color The color to change the object to
+     */
+    void color_picker(std::string color);
+
 private:
     /**
      * @brief The vertices to be rendered
@@ -59,8 +66,6 @@ private:
      * @brief The vertex array object
      */
     unsigned int *VAOs;
-
-    void color_picker(std::string color);
 
     /**
      * @brief Initializes the shader program
