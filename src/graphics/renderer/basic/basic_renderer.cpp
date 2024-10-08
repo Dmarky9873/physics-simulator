@@ -2,21 +2,39 @@
 
 BasicRenderer::BasicRenderer()
 {
-    // Initialize the shader program, vertex buffer object, and vertex array object
-    program_init();
+    // Default to white color
+    color_picker("white");
 }
 
-void BasicRenderer::program_init()
+void BasicRenderer::program_init(std::vector<unsigned int> shaders)
 {
-    // Create the vertex and fragment shaders
-    Shader vertex_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER);
-    Shader fragment_shader(FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER);
-
     // Create the shader program
-    ShaderProgram shader_program({vertex_shader.get_shader(), fragment_shader.get_shader()});
+    ShaderProgram shader_program(shaders);
 
     // Use the shader program when rendering
     glUseProgram(shader_program.get_program());
+}
+
+void BasicRenderer::color_picker(std::string color)
+{
+    Shader vertex_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER);
+
+    if (color == "orange")
+    {
+        // Create the fragment shader
+        Shader fragment_shader(ORANGE_PATH, GL_FRAGMENT_SHADER);
+
+        // Initialize the shader program
+        program_init({vertex_shader.get_shader(), fragment_shader.get_shader()});
+    }
+    else
+    {
+        // Create the fragment shader
+        Shader fragment_shader(WHITE_PATH, GL_FRAGMENT_SHADER);
+
+        // Initialize the shader program
+        program_init({vertex_shader.get_shader(), fragment_shader.get_shader()});
+    }
 }
 
 void BasicRenderer::VBO_VAO_init()

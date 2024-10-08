@@ -8,7 +8,9 @@
 #include <iostream>
 
 #define VERTEX_SHADER_PATH "/src/graphics/shader/src/vertex_shader.vert"
-#define FRAGMENT_SHADER_PATH "/src/graphics/shader/src/fragment_shader.frag"
+#define ORANGE_PATH "/src/graphics/shader/src/orange.frag"
+#define RED_PATH "/src/graphics/shader/src/red.frag"
+#define WHITE_PATH "/src/graphics/shader/src/white.frag"
 
 /**
  * @brief A basic renderer class
@@ -58,10 +60,13 @@ private:
      */
     unsigned int *VAOs;
 
+    void color_picker(std::string color);
+
     /**
      * @brief Initializes the shader program
      */
-    void program_init();
+    void
+    program_init(std::vector<unsigned int> shaders);
 
     /**
      * @brief Initializes the vertex buffer object and vertex array object

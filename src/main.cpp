@@ -48,7 +48,7 @@ int main()
 
         renderer.set_vertices(vertices);
 
-        renderer.render(true);
+        renderer.render(false);
 
         // Check and call events and swap the buffers
         glfwSwapBuffers(window);

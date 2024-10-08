@@ -18,7 +18,7 @@ public:
      *
      * Creates a shader program from a list of shaders
      *
-     * @param shaders A vector of shaders to create the program from
+     * @param shaders A vector of shaders to create the program from (can be any number of shaders)
      */
     ShaderProgram(const std::vector<unsigned int> &shaders);
 
