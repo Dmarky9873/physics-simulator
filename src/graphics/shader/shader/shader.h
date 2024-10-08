@@ -31,6 +31,8 @@ public:
      */
     unsigned int get_shader() { return shader; }
 
+    static unsigned int create_shader(const std::string shader_path, const u_int16_t shader_type);
+
 private:
     /**
      * @brief The shader's program ID

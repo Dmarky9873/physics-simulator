@@ -6,6 +6,7 @@
 #include <string>
 #include <glad/glad.h>
 #include <iostream>
+#include <map>
 
 #define VERTEX_SHADER_PATH "/src/graphics/shader/src/vertex_shader.vert"
 #define ORANGE_PATH "/src/graphics/shader/src/orange.frag"
@@ -20,19 +21,13 @@
 class BasicRenderer
 {
 public:
-    /**
-     * @brief Constructor for the BasicRenderer class
-     *
-     * Sets the background color along with initializing the shader program, vertex buffer object, and vertex array object
-     */
     BasicRenderer();
-
     /**
      * @brief Renders the object to the screen
      *
      * @param is_wireframe Whether the object should be rendered in wireframe mode or fill mode
      */
-    void render(bool is_wireframe);
+    void render(bool is_wireframe = false, std::vector<std::string> colors = {"white"});
 
     /**
      * @brief Sets the vertices to be rendered
@@ -43,18 +38,11 @@ public:
      */
     void set_vertices(const std::vector<std::vector<float>> &vertices);
 
-    /**
-     * @brief Changes the color of the object being rendered
-     *
-     * @param color The color to change the object to
-     */
-    void color_picker(std::string color);
-
 private:
     /**
      * @brief The vertices to be rendered
      */
-    std::vector<std::vector<float>> vertices;
+    std::vector<std::vector<float>> triangles;
     size_t num_triangles;
 
     /**
@@ -77,6 +65,19 @@ private:
      * @brief Initializes the vertex buffer object and vertex array object
      */
     void VBO_VAO_init();
+
+    /**
+     * @brief The colors that can be used
+     *
+     * The key is the color name and the value is the shader program
+     */
+    std::map<std::string, unsigned int> COLORS =
+        {
+            {"orange", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(ORANGE_PATH, GL_FRAGMENT_SHADER)})},
+            {"red", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(RED_PATH, GL_FRAGMENT_SHADER)})},
+            {"white", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(WHITE_PATH, GL_FRAGMENT_SHADER)})},
+            {"red", 1},
+    };
 };
 
 #endif

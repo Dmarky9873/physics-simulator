@@ -14,36 +14,9 @@ class ShaderProgram
 {
 public:
     /**
-     * @brief Constructor for the ShaderProgram class
-     *
-     * Creates a shader program from a list of shaders
-     *
-     * @param shaders A vector of shaders to create the program from (can be any number of shaders)
-     */
-    ShaderProgram(const std::vector<unsigned int> &shaders);
-
-    /**
-     * @brief Gets the shader program (its ID)
-     *
-     * @return The shader program's ID
-     */
-    unsigned int get_program() { return program; }
-
-private:
-    /**
-     * @brief The shader program's ID
-     */
-    unsigned int program;
-
-    /**
-     * @brief The shaders to be used within the program
-     */
-    std::vector<unsigned int> shaders;
-
-    /**
      * @brief Creates the shader program
      */
-    void create_program();
+    static unsigned int create_program(const std::vector<unsigned int> &shaders);
 };
 
 #endif

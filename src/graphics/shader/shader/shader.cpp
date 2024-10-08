@@ -11,6 +11,13 @@ Shader::Shader(const std::string shader_path, const u_int16_t shader_type)
     check_shader_compilation();
 }
 
+unsigned int Shader::create_shader(const std::string shader_path, const u_int16_t shader_type)
+{
+    // Create the shader and return its ID
+    Shader shader(shader_path, shader_type);
+    return shader.get_shader();
+}
+
 char *Shader::read_shader_code()
 {
     // Create a string to store the shader code and reads the shader file
