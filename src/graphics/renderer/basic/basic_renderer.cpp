@@ -4,8 +4,6 @@ BasicRenderer::BasicRenderer()
 {
     // Initialize the shader program, vertex buffer object, and vertex array object
     program_init();
-    VBO_init();
-    VAO_init();
 }
 
 void BasicRenderer::program_init()
@@ -21,33 +19,34 @@ void BasicRenderer::program_init()
     glUseProgram(shader_program.get_program());
 }
 
-void BasicRenderer::VBO_init()
+void BasicRenderer::VBO_VAO_init()
 {
     // Create the vertex buffer object
-    unsigned int VBO;
-    glGenBuffers(1, &VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-}
+    VBOs = new unsigned int[num_triangles];
+    glGenBuffers(num_triangles, VBOs);
 
-void BasicRenderer::VAO_init()
-{
     // Create the vertex array object
-    unsigned int VAO;
-    glGenVertexArrays(1, &VAO);
-    glBindVertexArray(VAO);
+    VAOs = new unsigned int[num_triangles];
+    glGenVertexArrays(num_triangles, VAOs);
+
+    // Bind the vertex array object and vertex buffer object
+    for (int i = 0; i < num_triangles; i++)
+    {
+        glBindVertexArray(VAOs[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, VBOs[i]);
+        glBufferData(GL_ARRAY_BUFFER, vertices[i].size() * sizeof(float), vertices[i].data(), GL_DYNAMIC_DRAW);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+        glEnableVertexAttribArray(0);
+    }
 }
 
-void BasicRenderer::set_vertices(const std::vector<float> &vertices)
+void BasicRenderer::set_vertices(const std::vector<std::vector<float>> &vertices)
 {
-    // Gets the new vertices to be rendered
+    // Gets the new vertices to be rendered and primes the vertex buffer objects and vertex array objects
     this->vertices = vertices;
+    num_triangles = vertices.size();
 
-    // Copy vertices array in buffer for graphics card to use
-    glBufferData(GL_ARRAY_BUFFER, this->vertices.size() * sizeof(float), this->vertices.data(), GL_DYNAMIC_DRAW);
-
-    // Set our vertex attributes pointers
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
+    VBO_VAO_init();
 }
 
 void BasicRenderer::render(bool is_wireframe)
@@ -62,20 +61,23 @@ void BasicRenderer::render(bool is_wireframe)
     else
         glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-    size_t vertices_len = vertices.size();
-
     // Check if there are vertices to render or if there are an incorrect number of vertices data
-    if (vertices_len == 0)
-    {
-        std::cout << "No vertices to render" << std::endl;
-        return;
-    }
-    else if (vertices_len % 3 != 0)
-    {
-        std::cout << "ERROR::RENDER::NUM VERTICES DATA NOT MULTIPLE OF THREE" << std::endl;
-        return;
-    }
 
     // Render the vertices
-    glDrawArrays(GL_TRIANGLES, 0, vertices.size() / 3);
+    for (int i = 0; i < num_triangles; i++)
+    {
+        size_t num_vertices = vertices[i].size();
+        if (num_triangles == 0)
+        {
+            std::cout << "No vertices to render" << std::endl;
+            return;
+        }
+        else if (num_vertices % 3 != 0)
+        {
+            std::cout << "ERROR::RENDER::NUM VERTICES DATA NOT MULTIPLE OF THREE" << std::endl;
+            return;
+        }
+        glBindVertexArray(VAOs[i]);
+        glDrawArrays(GL_TRIANGLES, 0, num_vertices / 3);
+    }
 }

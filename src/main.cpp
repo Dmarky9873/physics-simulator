@@ -16,16 +16,20 @@ int main()
     WindowManager window_manager;
     GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE);
     BasicRenderer renderer;
-    std::vector<float> vertices = {
-        // first triangle
-        0.5f, 0.5f, 0.0f,   // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, 0.5f, 0.0f,  // top left
-                            // second triangle
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f   // top left
-    };
+    std::vector<std::vector<float>> vertices = {{
+                                                    // first triangle
+                                                    // x, y, z
+                                                    0.0f, -0.5f, 0.0f, // bottom left
+                                                    0.0f, 0.5f, 0.0f,  // top left
+                                                    0.5f, -0.5f, 0.0f  // bottom right
+                                                },
+                                                {
+                                                    // second triangle
+                                                    // x, y, z
+                                                    0.0f, 0.5f, 0.0f,   // top right
+                                                    -0.5f, -0.5f, 0.0f, // bottom left
+                                                    0.5f, -0.5f, 0.0f   // bottom right
+                                                }};
 
     if (!window)
     {
@@ -38,29 +42,6 @@ int main()
         if (InputManager::is_key_pressed(window, GLFW_KEY_ESCAPE))
         {
             glfwSetWindowShouldClose(window, true);
-        }
-
-        if (InputManager::is_key_pressed(window, GLFW_KEY_SPACE))
-        {
-            vertices = {
-                // first triangle
-                0.5f, 0.5f, 0.0f,  // top right
-                0.5f, -0.5f, 0.0f, // bottom right
-                -0.5f, 0.5f, 0.0f, // top left
-            };
-        }
-        else
-        {
-            vertices = {
-                // first triangle
-                0.5f, 0.5f, 0.0f,   // top right
-                0.5f, -0.5f, 0.0f,  // bottom right
-                -0.5f, 0.5f, 0.0f,  // top left
-                                    // second triangle
-                0.5f, -0.5f, 0.0f,  // bottom right
-                -0.5f, -0.5f, 0.0f, // bottom left
-                -0.5f, 0.5f, 0.0f   // top left
-            };
         }
 
         // Rendering commands
@@ -82,30 +63,30 @@ int main()
 void draw()
 {
 
-    std::vector<float> vertices = {
-        // first triangle
-        0.5f, 0.5f, 0.0f,   // top right
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, 0.5f, 0.0f,  // top left
-                            // second triangle
-        0.5f, -0.5f, 0.0f,  // bottom right
-        -0.5f, -0.5f, 0.0f, // bottom left
-        -0.5f, 0.5f, 0.0f   // top left
-    };
-    // unsigned int indices[] = {
-    //     // note that we start from 0!
-    //     0, 1, 3, // first triangle
-    //     1, 2, 3  // second triangle
+    // std::vector<float> vertices = {
+    //     // first triangle
+    //     0.5f, 0.5f, 0.0f,   // top right
+    //     0.5f, -0.5f, 0.0f,  // bottom right
+    //     -0.5f, 0.5f, 0.0f,  // top left
+    //                         // second triangle
+    //     0.5f, -0.5f, 0.0f,  // bottom right
+    //     -0.5f, -0.5f, 0.0f, // bottom left
+    //     -0.5f, 0.5f, 0.0f   // top left
     // };
+    // // unsigned int indices[] = {
+    // //     // note that we start from 0!
+    // //     0, 1, 3, // first triangle
+    // //     1, 2, 3  // second triangle
+    // // };
 
-    // unsigned int EBO;
-    // glGenBuffers(1, &EBO);
+    // // unsigned int EBO;
+    // // glGenBuffers(1, &EBO);
 
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-    BasicRenderer renderer;
+    // // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+    // // glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    // BasicRenderer renderer;
 
-    renderer.set_vertices(vertices);
+    // renderer.set_vertices(vertices);
 
-    renderer.render(true);
+    // renderer.render(true);
 }

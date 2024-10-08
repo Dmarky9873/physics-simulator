@@ -39,13 +39,24 @@ public:
      *
      * @param vertices The vertices to be rendered
      */
-    void set_vertices(const std::vector<float> &vertices);
+    void set_vertices(const std::vector<std::vector<float>> &vertices);
 
 private:
     /**
      * @brief The vertices to be rendered
      */
-    std::vector<float> vertices;
+    std::vector<std::vector<float>> vertices;
+    size_t num_triangles;
+
+    /**
+     * @brief The vertex buffer object
+     */
+    unsigned int *VBOs;
+
+    /**
+     * @brief The vertex array object
+     */
+    unsigned int *VAOs;
 
     /**
      * @brief Initializes the shader program
@@ -53,14 +64,9 @@ private:
     void program_init();
 
     /**
-     * @brief Initializes the vertex buffer object
+     * @brief Initializes the vertex buffer object and vertex array object
      */
-    void VBO_init();
-
-    /**
-     * @brief Initializes the vertex array object
-     */
-    void VAO_init();
+    void VBO_VAO_init();
 };
 
 #endif
