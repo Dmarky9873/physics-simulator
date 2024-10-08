@@ -76,7 +76,6 @@ private:
             {"orange", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(ORANGE_PATH, GL_FRAGMENT_SHADER)})},
             {"red", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(RED_PATH, GL_FRAGMENT_SHADER)})},
             {"white", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(WHITE_PATH, GL_FRAGMENT_SHADER)})},
-            {"red", 1},
     };
 };
 
