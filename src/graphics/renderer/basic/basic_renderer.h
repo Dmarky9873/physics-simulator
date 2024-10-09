@@ -11,10 +11,10 @@
 #include <map>
 
 // Shader paths
-#define VERTEX_SHADER_PATH "/src/graphics/shader/src/basic/vertex_shader.vert"
-#define ORANGE_PATH "/src/graphics/shader/src/basic/orange.frag"
-#define RED_PATH "/src/graphics/shader/src/basic/red.frag"
-#define WHITE_PATH "/src/graphics/shader/src/basic/white.frag"
+#define BASIC_VERTEX_SHADER_PATH "/src/graphics/shader/src/basic/vertex_shader.vert"
+#define ORANGE_FRAGMENT_SHADER_PATH "/src/graphics/shader/src/basic/orange.frag"
+#define RED_FRAGMENT_SHADER_PATH "/src/graphics/shader/src/basic/red.frag"
+#define WHITE_FRAGMENT_SHADER_PATH "/src/graphics/shader/src/basic/white.frag"
 
 /**
  * @brief A basic renderer class
@@ -24,11 +24,14 @@
 class BasicRenderer
 {
 public:
-    BasicRenderer();
     /**
      * @brief Renders the object to the screen
      *
      * @param is_wireframe Whether the object should be rendered in wireframe mode or fill mode
+     * @param colors The colors to be used for rendering. Each color matches to a triangle in the
+     * `triangles` array. The colors must be in the COLORS map. If there are not enough colors,
+     * the last color will be used for the remaining objects. If there are too many colors, the
+     * extra colors will be ignored.
      */
     void render(bool is_wireframe = false, std::vector<std::string> colors = {"white"});
 
@@ -37,7 +40,7 @@ public:
      *
      * Also ensures the vertices data is properly formatted for rendering
      *
-     * @param vertices The vertices to be rendered
+     * @param vertices 2D array where each array is a triangle and each triangle has 3 vertices
      */
     void set_vertices(const std::vector<std::vector<float>> &vertices);
 
@@ -46,6 +49,10 @@ private:
      * @brief The vertices to be rendered
      */
     std::vector<std::vector<float>> triangles;
+
+    /**
+     * @brief The number of triangles to be rendered
+     */
     size_t num_triangles;
 
     /**
@@ -59,12 +66,6 @@ private:
     unsigned int *VAOs;
 
     /**
-     * @brief Initializes the shader program
-     */
-    void
-    program_init(std::vector<unsigned int> shaders);
-
-    /**
      * @brief Initializes the vertex buffer object and vertex array object
      */
     void VBO_VAO_init();
@@ -76,9 +77,9 @@ private:
      */
     std::map<std::string, unsigned int> COLORS =
         {
-            {"orange", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(ORANGE_PATH, GL_FRAGMENT_SHADER)})},
-            {"red", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(RED_PATH, GL_FRAGMENT_SHADER)})},
-            {"white", ShaderProgram::create_program({Shader::create_shader(VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(WHITE_PATH, GL_FRAGMENT_SHADER)})},
+            {"orange", ShaderProgram::create_program({Shader::create_shader(BASIC_VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(ORANGE_FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER)})},
+            {"red", ShaderProgram::create_program({Shader::create_shader(BASIC_VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(RED_FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER)})},
+            {"white", ShaderProgram::create_program({Shader::create_shader(BASIC_VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(WHITE_FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER)})},
     };
 };
 

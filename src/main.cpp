@@ -5,6 +5,7 @@
 #include "graphics/shader/shader/shader.h"
 #include "graphics/shader/program/shader_program.h"
 #include "graphics/renderer/basic/basic_renderer.h"
+#include "graphics/renderer/inline_color/inline_color_renderer.h"
 
 void draw();
 
@@ -12,7 +13,9 @@ int main()
 {
     WindowManager window_manager;
     GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE);
-    BasicRenderer renderer;
+    BasicRenderer basic_renderer;
+    InlineColorRenderer inline_color_renderer;
+
     std::vector<std::vector<float>> vertices = {{
         // positions         // colors
         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,  // bottom right
@@ -35,8 +38,11 @@ int main()
         }
 
         // Rendering commands
-        renderer.set_vertices(vertices);
-        renderer.render(false, {"red", "white"});
+        // basic_renderer.set_vertices(vertices);
+        // basic_renderer.render(false, {"red", "white"});
+
+        inline_color_renderer.set_vertices(vertices);
+        inline_color_renderer.render(false);
 
         // Check and call events and swap the buffers
         glfwSwapBuffers(window);

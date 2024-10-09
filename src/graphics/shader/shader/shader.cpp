@@ -15,6 +15,7 @@ unsigned int Shader::create_shader(const std::string shader_path, const u_int16_
 {
     // Create the shader and return its ID
     Shader shader(shader_path, shader_type);
+
     return shader.get_shader();
 }
 
@@ -48,6 +49,7 @@ char *Shader::read_shader_code()
     catch (std::ifstream::failure &e)
     {
         // If the file is not successfully read, print an error message and return an empty char*
+        std::cout << path << std::endl;
         std::cout << "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ" << std::endl;
         std::strcpy(shader_code, "");
     }
@@ -64,6 +66,18 @@ void Shader::compile_shader()
     shader = glCreateShader(type);
     glShaderSource(shader, 1, &shader_code, NULL);
     glCompileShader(shader);
+
+    // Checks to see if the shader was compiled correctly
+    int success;
+    char info_log[512];
+
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(shader, 512, NULL, info_log);
+        std::cout << "ERROR::SHADER::COMPILATION_FAILED\n"
+                  << info_log << std::endl;
+    }
 }
 
 void Shader::check_shader_compilation()

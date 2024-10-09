@@ -1,9 +1,5 @@
 #include "basic_renderer.h"
 
-BasicRenderer::BasicRenderer()
-{
-}
-
 void BasicRenderer::VBO_VAO_init()
 {
 
@@ -21,9 +17,9 @@ void BasicRenderer::VBO_VAO_init()
         glBindVertexArray(VAOs[i]);
         glBindBuffer(GL_ARRAY_BUFFER, VBOs[i]);
         glBufferData(GL_ARRAY_BUFFER, triangles[i].size() * sizeof(float), triangles[i].data(), GL_DYNAMIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
-        glEnableVertexAttribArray(0);
     }
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
+    glEnableVertexAttribArray(0);
 }
 
 void BasicRenderer::set_vertices(const std::vector<std::vector<float>> &vertices)
