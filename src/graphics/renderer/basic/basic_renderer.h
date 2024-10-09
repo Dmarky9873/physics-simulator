@@ -2,16 +2,19 @@
 #define BASIC_RENDERER_H
 
 #include "../../shader/program/shader_program.h"
+#include <GLFW/glfw3.h>
+
 #include <vector>
 #include <string>
 #include <glad/glad.h>
 #include <iostream>
 #include <map>
 
-#define VERTEX_SHADER_PATH "/src/graphics/shader/src/vertex_shader.vert"
-#define ORANGE_PATH "/src/graphics/shader/src/orange.frag"
-#define RED_PATH "/src/graphics/shader/src/red.frag"
-#define WHITE_PATH "/src/graphics/shader/src/white.frag"
+// Shader paths
+#define VERTEX_SHADER_PATH "/src/graphics/shader/src/basic/vertex_shader.vert"
+#define ORANGE_PATH "/src/graphics/shader/src/basic/orange.frag"
+#define RED_PATH "/src/graphics/shader/src/basic/red.frag"
+#define WHITE_PATH "/src/graphics/shader/src/basic/white.frag"
 
 /**
  * @brief A basic renderer class
