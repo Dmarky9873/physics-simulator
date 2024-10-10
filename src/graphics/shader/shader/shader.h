@@ -52,7 +52,7 @@ private:
     /**
      * @brief The current working directory of the program
      */
-    std::string CURRENT_WORKING_DIRECTORY = std::__fs::filesystem::current_path();
+    std::string CURRENT_WORKING_DIRECTORY = std::filesystem::current_path();
 
     /**
      * @brief Reads the shader code from the source code file and returns it as a char*
