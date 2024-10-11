@@ -53,6 +53,8 @@ private:
      */
     size_t num_triangles;
 
+    ShaderProgram shader_program = ShaderProgram({Shader::create_shader(INLINE_VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(INLINE_FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER)});
+
     /**
      * @brief The vertex buffer object
      */

@@ -22,3 +22,24 @@ unsigned int ShaderProgram::create_program(const std::vector<unsigned int> &shad
 
     return program;
 }
+
+
+void ShaderProgram::setBool(const std::string &name, bool value)
+{
+    glUniform1i(glGetUniformLocation(program, name.c_str()), (int)value);
+}
+
+void ShaderProgram::setInt(const std::string &name, int value)
+{
+    glUniform1i(glGetUniformLocation(program, name.c_str()), value);
+}
+
+void ShaderProgram::setFloat(const std::string &name, float value)
+{
+    glUniform1f(glGetUniformLocation(program, name.c_str()), value);
+}
+
+void ShaderProgram::setMat4f(const std::string &name, const glm::mat4 &value)
+{
+    glUniformMatrix4fv(glGetUniformLocation(program, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
+}

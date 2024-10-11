@@ -73,11 +73,6 @@ void BasicRenderer::render(bool is_wireframe, std::vector<std::string> colors)
         {
             glUseProgram(COLORS[colors[i]]);
         }
-        // float timeValue = glfwGetTime();
-        // float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-        // int vertexColorLocation = glGetUniformLocation(COLORS["white"], "our_color");
-        // glUseProgram(COLORS["white"]);
-        // glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
         // Render the vertices
         glBindVertexArray(VAOs[i]);

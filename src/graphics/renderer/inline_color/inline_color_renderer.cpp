@@ -3,8 +3,7 @@
 InlineColorRenderer::InlineColorRenderer()
 {
     // Create the shader program and use it
-    unsigned int shader_program = ShaderProgram::create_program({Shader::create_shader(INLINE_VERTEX_SHADER_PATH, GL_VERTEX_SHADER), Shader::create_shader(INLINE_FRAGMENT_SHADER_PATH, GL_FRAGMENT_SHADER)});
-    glUseProgram(shader_program);
+    glUseProgram(shader_program.get_program());
 }
 
 void InlineColorRenderer::VBO_VAO_init()
@@ -70,6 +69,10 @@ void InlineColorRenderer::render(bool is_wireframe)
             std::cout << "ERROR::RENDER::NUM VERTICES DATA NOT MULTIPLE OF THREE" << std::endl;
             return;
         }
+        float timeValue = glfwGetTime();
+        float x_offset = (sin(20 * timeValue) / 2.0f);
+
+        shader_program.setFloat("n", x_offset);
 
         // Render the vertices
         glBindVertexArray(VAOs[i]);
