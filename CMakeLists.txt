@@ -8,30 +8,41 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Add the executable and source files (including glad.c for GLAD)
 add_executable(physics_simulator
     src/main.cpp
-    src/third_party/glad.c
+    include/glad/glad.c
     src/window_manager/window.cpp
     src/input_manager/input.cpp
     src/graphics/shader/shader/shader.cpp
     src/graphics/shader/program/shader_program.cpp
     src/graphics/renderer/basic/basic_renderer.cpp
     src/graphics/renderer/inline_color/inline_color_renderer.cpp
+
+    # # Dear ImGui core source files
+    # src/third_party/imgui/imgui_demo.cpp
+    # src/third_party/imgui/imgui_draw.cpp
+    # src/third_party/imgui/imgui_widgets.cpp
+    # src/third_party/imgui/imgui.cpp
+    # src/third_party/imgui/imgui_tables.cpp
+
+    # # Dear ImGui backend source files
+    # src/third_party/imgui/imgui_impl_glfw.cpp
+    # src/third_party/imgui/imgui_impl_opengl3.cpp
 )
 
-# Add include directories for GLAD and GLFW
-include_directories(${CMAKE_SOURCE_DIR}/include)
 
-# Link directories for GLFW library
+target_include_directories(physics_simulator PRIVATE 
+    ${CMAKE_SOURCE_DIR}/include
+)
+
+# Link directories for the GLFW library
 link_directories(${CMAKE_SOURCE_DIR}/lib)
 
-# Link OpenGL and GLFW
+# Find OpenGL (required for linking)
 find_package(OpenGL REQUIRED)
-target_link_libraries(physics_simulator OpenGL::GL)
 
-# Link GLFW library statically from the lib directory
-target_link_libraries(physics_simulator ${CMAKE_SOURCE_DIR}/lib/libglfw3.a)
-
-# Link macOS system frameworks
-target_link_libraries(physics_simulator
+# Link libraries and frameworks to the executable
+target_link_libraries(physics_simulator 
+    OpenGL::GL
+    ${CMAKE_SOURCE_DIR}/lib/libglfw3.a
     "-framework Cocoa"
     "-framework IOKit"
     "-framework CoreFoundation"

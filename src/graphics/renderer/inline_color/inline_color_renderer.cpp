@@ -69,11 +69,28 @@ void InlineColorRenderer::render(bool is_wireframe)
             std::cout << "ERROR::RENDER::NUM VERTICES DATA NOT MULTIPLE OF THREE" << std::endl;
             return;
         }
+
         float timeValue = glfwGetTime();
-        float x_offset = (sin(20 * timeValue) / 2.0f);
+        float spin = sin(timeValue * 0.5f) * 360.0f;
 
-        shader_program.setFloat("n", x_offset);
+        glm::mat4 trans1 = glm::mat4(1.0f);
+        glm::mat4 trans2 = glm::mat4(1.0f);
 
+        trans1 = glm::translate(trans1, glm::vec3(0.5f, -0.5f, 0.0f));
+        trans1 = glm::rotate(trans1, (glm::radians(spin)), glm::vec3(0.0f, 0.0f, 1.0f));
+        trans1 = glm::scale(trans1, glm::vec3(0.5f, 0.5f, 0.5f));
+
+        trans2 = glm::translate(trans2, glm::vec3(0.5f, 0.5f, 0.0f));
+        trans2 = glm::rotate(trans2, (glm::radians(spin)), glm::vec3(0.0f, 0.0f, 1.0f));
+        trans2 = glm::scale(trans2, glm::vec3(0.5f, 0.5f, 0.5f));
+        
+        shader_program.setMat4f("transform", trans1);
+
+        // Render the vertices
+        glBindVertexArray(VAOs[i]);
+        glDrawArrays(GL_TRIANGLES, 0, num_vertices / 3);
+
+        shader_program.setMat4f("transform", trans2);
         // Render the vertices
         glBindVertexArray(VAOs[i]);
         glDrawArrays(GL_TRIANGLES, 0, num_vertices / 3);

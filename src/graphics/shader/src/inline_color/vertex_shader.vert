@@ -4,10 +4,10 @@ layout (location = 1) in vec3 aColor; // the color variable has attribute positi
   
 out vec3 ourColor; // output a color to the fragment shader
 
-uniform float n = 0.0f;
+uniform mat4 transform;
 
 void main()
 {
-    gl_Position = vec4(aPos.x + n, aPos.y, aPos.z, 1.0);
+    gl_Position = transform * vec4(aPos, 1.0);
     ourColor = aColor; 
 }  
