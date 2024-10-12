@@ -16,16 +16,16 @@ add_executable(physics_simulator
     src/graphics/renderer/basic/basic_renderer.cpp
     src/graphics/renderer/inline_color/inline_color_renderer.cpp
 
-    # # Dear ImGui core source files
-    # src/third_party/imgui/imgui_demo.cpp
-    # src/third_party/imgui/imgui_draw.cpp
-    # src/third_party/imgui/imgui_widgets.cpp
-    # src/third_party/imgui/imgui.cpp
-    # src/third_party/imgui/imgui_tables.cpp
+    # Dear ImGui core source files
+    include/imgui/imgui_demo.cpp
+    include/imgui/imgui_draw.cpp
+    include/imgui/imgui_widgets.cpp
+    include/imgui/imgui.cpp
+    include/imgui/imgui_tables.cpp
 
-    # # Dear ImGui backend source files
-    # src/third_party/imgui/imgui_impl_glfw.cpp
-    # src/third_party/imgui/imgui_impl_opengl3.cpp
+    # Dear ImGui backend source files
+    include/imgui/imgui_impl_glfw.cpp
+    include/imgui/imgui_impl_opengl3.cpp
 )
 
 
