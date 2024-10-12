@@ -42,3 +42,6 @@ cmake-build-debug/
 # Build directories
 build.sh
 /build/
+
+# Mac OS
+.DS_Store
