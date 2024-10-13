@@ -1,6 +1,15 @@
 #include "2d_scenes.h"
 
-void sc_2d_triangle_test_render(float speed_coef)
+float get_animation_step(bool is_paused)
+{
+    if (is_paused)
+    {
+        return 0;
+    }
+    return sin(glfwGetTime());
+}
+
+void sc_2d_triangle_test_render(float speed_coef, bool is_paused)
 {
     // Creates an instance of the renderer class
     InlineColorRenderer inline_color_renderer;
@@ -21,7 +30,7 @@ void sc_2d_triangle_test_render(float speed_coef)
                                                  0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f}};
 
     // Gets the time value so that the triangles can perform actions as a function of time
-    float time_value = glfwGetTime();
+    float time_value = get_animation_step(is_paused) / 10;
     float spin = sin(time_value * 0.5f * speed_coef) * 360.0f;
 
     // Creates the transformation matrices for the triangles and sets them to a placebo value
@@ -31,10 +40,10 @@ void sc_2d_triangle_test_render(float speed_coef)
 
     // Applies the transformations to the transformation matrices
     trans1 = glm::translate(trans1, glm::vec3(-0.5f, -0.5f, 0.0f));
-    trans1 = glm::rotate(trans1, (glm::radians(spin)), glm::vec3(0.0f, 0.0f, 1.0f));
+    trans1 = glm::rotate(trans1, spin, glm::vec3(0.0f, 0.0f, 1.0f));
     trans1 = glm::scale(trans1, glm::vec3(0.5f, 0.5f, 0.5f));
 
-    trans3 = glm::translate(trans3, glm::vec3(sin(time_value * speed_coef), 0.0f, 0.0f));
+    trans3 = glm::translate(trans3, glm::vec3(sin(time_value * speed_coef * 10), 0.0f, 0.0f));
     trans3 = glm::scale(trans3, glm::vec3(0.25f, 0.25f, 0.25f));
 
     // Renders the triangles

@@ -69,9 +69,10 @@ void SceneManager::sc_2d_triangle_test()
 
     // Slider for speed of triangle movement
     ImGui::SliderFloat("Speed Coefficient", &two_d_triangle_test_speed_coef, 0.1f, 10.0f);
+    ImGui::Checkbox("Pause & Reset", &two_d_triangle_test_is_paused);
 
     // Render triangles
-    sc_2d_triangle_test_render(two_d_triangle_test_speed_coef);
+    sc_2d_triangle_test_render(two_d_triangle_test_speed_coef, two_d_triangle_test_is_paused);
 
     ImGui::End(); // End the ImGui window
 }

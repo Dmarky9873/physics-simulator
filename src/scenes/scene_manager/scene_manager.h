@@ -36,6 +36,7 @@ private:
     // Scene variables
     // 2D
     float two_d_triangle_test_speed_coef = 1;
+    bool two_d_triangle_test_is_paused = false;
 
     // Scenes
 

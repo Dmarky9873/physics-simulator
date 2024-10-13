@@ -9,11 +9,13 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "../../graphics/renderer/inline_color/inline_color_renderer.h"
 
+float get_animation_step(bool is_paused);
+
 /**
  * @brief Renders a 2D triangle test scene
  *
  * Meant to be used as a test to see if 2D rendering is working
  */
-void sc_2d_triangle_test_render(float speed_coef);
+void sc_2d_triangle_test_render(float speed_coef, bool is_paused = false);
 
 #endif
