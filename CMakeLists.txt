@@ -26,6 +26,10 @@ add_executable(physics_simulator
     # Dear ImGui backend source files
     include/imgui/imgui_impl_glfw.cpp
     include/imgui/imgui_impl_opengl3.cpp
+
+    # Scenes
+    src/scenes/scene_manager/scene_manager.cpp
+    src/scenes/2d/2d_scenes.cpp
 )
 
 

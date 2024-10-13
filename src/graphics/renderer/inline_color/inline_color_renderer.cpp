@@ -22,17 +22,20 @@ void InlineColorRenderer::VBO_VAO_init()
         glBindVertexArray(VAOs[i]);
         glBindBuffer(GL_ARRAY_BUFFER, VBOs[i]);
         glBufferData(GL_ARRAY_BUFFER, triangles[i].size() * sizeof(float), triangles[i].data(), GL_DYNAMIC_DRAW);
+        // Position attribute
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
+        glEnableVertexAttribArray(0);
+        // Color attribute
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
+        glEnableVertexAttribArray(1);
     }
-    // Position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
-    glEnableVertexAttribArray(0);
-    // Color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
 }
 
-void InlineColorRenderer::set_vertices(const std::vector<std::vector<float>> &vertices)
+void InlineColorRenderer::set_vertices(const std::vector<std::vector<float>> &vertices, std::vector<glm::mat4> trans)
 {
+    // Set the translation matrix
+    translations = std::move(trans);
+
     // Gets the new vertices to be rendered and primes the vertex buffer objects and vertex array objects
     this->triangles = vertices;
     num_triangles = vertices.size();
@@ -42,10 +45,6 @@ void InlineColorRenderer::set_vertices(const std::vector<std::vector<float>> &ve
 
 void InlineColorRenderer::render(bool is_wireframe)
 {
-    // Set the background color
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-
     // Set the polygon mode to wireframe or fill based on desire
     if (is_wireframe)
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -70,29 +69,15 @@ void InlineColorRenderer::render(bool is_wireframe)
             return;
         }
 
-        float timeValue = glfwGetTime();
-        float spin = sin(timeValue * 0.5f) * 360.0f;
-
-        glm::mat4 trans1 = glm::mat4(1.0f);
-        glm::mat4 trans2 = glm::mat4(1.0f);
-
-        trans1 = glm::translate(trans1, glm::vec3(0.5f, -0.5f, 0.0f));
-        trans1 = glm::rotate(trans1, (glm::radians(spin)), glm::vec3(0.0f, 0.0f, 1.0f));
-        trans1 = glm::scale(trans1, glm::vec3(0.5f, 0.5f, 0.5f));
-
-        trans2 = glm::translate(trans2, glm::vec3(0.5f, 0.5f, 0.0f));
-        trans2 = glm::rotate(trans2, (glm::radians(spin)), glm::vec3(0.0f, 0.0f, 1.0f));
-        trans2 = glm::scale(trans2, glm::vec3(0.5f, 0.5f, 0.5f));
-        
-        shader_program.setMat4f("transform", trans1);
+        if (i > translations.size())
+            shader_program.setMat4f("transform", glm::mat4(1.0f));
+        else
+            shader_program.setMat4f("transform", translations[i]);
 
         // Render the vertices
         glBindVertexArray(VAOs[i]);
-        glDrawArrays(GL_TRIANGLES, 0, num_vertices / 3);
-
-        shader_program.setMat4f("transform", trans2);
-        // Render the vertices
+        glDrawArrays(GL_TRIANGLES, 0, 18 /*num_vertices*/ / 3);
         glBindVertexArray(VAOs[i]);
-        glDrawArrays(GL_TRIANGLES, 0, num_vertices / 3);
+        glDrawArrays(GL_TRIANGLES, 0, 18 /*num_vertices*/ / 3);
     }
 }

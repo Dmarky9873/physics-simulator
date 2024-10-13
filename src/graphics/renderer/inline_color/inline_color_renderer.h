@@ -40,13 +40,16 @@ public:
      *
      * @param vertices The vertices to be rendered
      */
-    void set_vertices(const std::vector<std::vector<float>> &vertices);
+    void set_vertices(const std::vector<std::vector<float>> &vertices, std::vector<glm::mat4> trans = {glm::mat4(1.0f)});
 
 private:
+    std::vector<glm::mat4> translations = {glm::mat4(1.0f)};
+
     /**
      * @brief The triangles to be rendered
      */
-    std::vector<std::vector<float>> triangles;
+    std::vector<std::vector<float>>
+        triangles;
 
     /**
      * @brief The number of triangles to be rendered
