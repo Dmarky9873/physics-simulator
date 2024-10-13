@@ -66,8 +66,12 @@ void SceneManager::sc_2d_triangle_test()
         // Change the scene
         body = std::bind(&SceneManager::sc_2d_selector, this);
     }
+
+    // Slider for speed of triangle movement
+    ImGui::SliderFloat("Speed Coefficient", &two_d_triangle_test_speed_coef, 0.1f, 10.0f);
+
     // Render triangles
-    sc_2d_triangle_test_render();
+    sc_2d_triangle_test_render(two_d_triangle_test_speed_coef);
 
     ImGui::End(); // End the ImGui window
 }

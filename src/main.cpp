@@ -23,7 +23,6 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT);
 
         // Input
-
         // Closes the window if the escape key is pressed
         if (InputManager::is_key_pressed(window, GLFW_KEY_ESCAPE))
         {

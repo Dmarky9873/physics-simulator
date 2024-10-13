@@ -14,6 +14,6 @@
  *
  * Meant to be used as a test to see if 2D rendering is working
  */
-void sc_2d_triangle_test_render();
+void sc_2d_triangle_test_render(float speed_coef);
 
 #endif

@@ -33,6 +33,10 @@ public:
     std::function<void()> body;
 
 private:
+    // Scene variables
+    // 2D
+    float two_d_triangle_test_speed_coef = 1;
+
     // Scenes
 
     /**
