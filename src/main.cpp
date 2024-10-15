@@ -4,12 +4,16 @@
 #include "input_manager/input.h"
 #include "scenes/scene_manager/scene_manager.h"
 
+#define ONE_HUNDRED_TWENTY_FPS 1.0f / 120.0f
+#define SIXTY_FPS 1.0f / 60.0f
+#define THIRTY_FPS 1.0f / 30.0f
+#define FIFTEEN_FPS 1.0f / 15.0f
+
 int main()
 {
     WindowManager window_manager;
     GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE);
-
-    SceneManager scene_manager = SceneManager(window);
+    SceneManager scene_manager = SceneManager(window, ONE_HUNDRED_TWENTY_FPS);
 
     if (!window)
     {
@@ -30,7 +34,7 @@ int main()
         }
 
         // Render
-        scene_manager.show();
+        scene_manager.show(false); // FPS measurement does not work
 
         // Check and call events and swap the buffers
         glfwSwapBuffers(window);

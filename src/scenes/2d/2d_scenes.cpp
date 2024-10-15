@@ -1,37 +1,27 @@
 #include "2d_scenes.h"
 
-float get_animation_step(bool is_paused)
+void TwoDScenes::sc_2d_triangle_test_render(float speed_coef, int frame, float frame_duration)
 {
-    if (is_paused)
-    {
-        return 0;
-    }
-    return sin(glfwGetTime());
-}
-
-void sc_2d_triangle_test_render(float speed_coef, bool is_paused)
-{
-    // Creates an instance of the renderer class
-    InlineColorRenderer inline_color_renderer;
-
+    // Calculates the animation index (a value between -1 and 1 corresponding to the frame of the program)
+    float animation_index = sin(frame * speed_coef * frame_duration);
     // Creates the vertices for the triangles
-    std::vector<std::vector<float>> vertices = {{// positions         // colors
-                                                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                                                 -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-                                                 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
-                                                {// positions         // colors
-                                                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                                                 -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-                                                 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+    std::vector<std::vector<float>>
+        vertices = {{// positions         // colors
+                     0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+                     -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+                     0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
+                    {// positions         // colors
+                     0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+                     -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+                     0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f},
 
-                                                {// positions         // colors
-                                                 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-                                                 -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-                                                 0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f}};
+                    {// positions         // colors
+                     0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+                     -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+                     0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f}};
 
-    // Gets the time value so that the triangles can perform actions as a function of time
-    float time_value = get_animation_step(is_paused) / 10;
-    float spin = sin(time_value * 0.5f * speed_coef) * 360.0f;
+    // Calculates the spin of the triangles and sets it to a radian value of the animation index
+    float spin = animation_index * 3.14159f;
 
     // Creates the transformation matrices for the triangles and sets them to a placebo value
     glm::mat4 trans1 = glm::mat4(1.0f);
@@ -43,7 +33,7 @@ void sc_2d_triangle_test_render(float speed_coef, bool is_paused)
     trans1 = glm::rotate(trans1, spin, glm::vec3(0.0f, 0.0f, 1.0f));
     trans1 = glm::scale(trans1, glm::vec3(0.5f, 0.5f, 0.5f));
 
-    trans3 = glm::translate(trans3, glm::vec3(sin(time_value * speed_coef * 10), 0.0f, 0.0f));
+    trans3 = glm::translate(trans3, glm::vec3(animation_index, 0.0f, 0.0f));
     trans3 = glm::scale(trans3, glm::vec3(0.25f, 0.25f, 0.25f));
 
     // Renders the triangles

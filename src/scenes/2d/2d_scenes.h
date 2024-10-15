@@ -9,13 +9,25 @@
 #include "imgui/imgui_impl_opengl3.h"
 #include "../../graphics/renderer/inline_color/inline_color_renderer.h"
 
-float get_animation_step(bool is_paused);
+class TwoDScenes
+{
+public:
+    /**
+     * @brief Renders a 2D triangle test scene
+     *
+     * Meant to be used as a test to see if 2D rendering is working
+     *
+     * @param speed_coef The speed coefficient of the triangle (subject to change based on a slider)
+     * @param frame The current frame counter of the program
+     * @param frame_duration The duration of a frame in seconds (1 / fps)
+     */
+    void sc_2d_triangle_test_render(float speed_coef, int frame, float frame_duration);
 
-/**
- * @brief Renders a 2D triangle test scene
- *
- * Meant to be used as a test to see if 2D rendering is working
- */
-void sc_2d_triangle_test_render(float speed_coef, bool is_paused = false);
+private:
+    /**
+     * @brief The renderer for the 2D scenes
+     */
+    InlineColorRenderer inline_color_renderer;
+};
 
 #endif

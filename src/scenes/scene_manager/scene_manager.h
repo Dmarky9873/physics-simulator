@@ -17,13 +17,17 @@ public:
      * @brief Constructor for the SceneManager class
      *
      * @param window The window to render scenes to
+     *
+     * @param fps The frames per second to render the scenes at
      */
-    SceneManager(GLFWwindow *window);
+    SceneManager(GLFWwindow *window, float fps);
 
     /**
      * @brief Shows the current scene
+     *
+     * @param show_fps Whether or not to show the frames per second in the console
      */
-    void show();
+    void show(bool show_fps = false);
 
     /**
      * @brief The body of the scene
@@ -33,12 +37,84 @@ public:
     std::function<void()> body;
 
 private:
-    // Scene variables
-    // 2D
+    // Utility functions
+
+    /**
+     * @brief Measures the frames per second of the program
+     */
+    void measure_fps();
+
+    // Animation variables
+
+    /**
+     * @brief The current frame of the scene
+     */
+    int frame = 0;
+
+    /**
+     * @brief Whether or not the scene is paused
+     */
+    bool is_paused = false;
+
+    /**
+     * @brief The duration of a frame in seconds (1 / fps)
+     */
+    float frame_dur;
+
+    /**
+     * @brief The last time a frame was changed
+     */
+    float prev_time = glfwGetTime();
+
+    /**
+     * @brief The start time of the current scene
+     */
+    float start_time = glfwGetTime();
+
+    // Animation functions
+
+    /**
+     * @brief Resets the scene
+     *
+     * This function resets the frame counter (to zero), start time (to the current time), and pause state (to false)
+     */
+    void reset();
+
+    /**
+     * @brief Steps the frame
+     *
+     * This function increments the frame counter if and only if the current scene is not paused
+     * and if the elapsed time since the last frame increment is longer than the desired frame duration
+     */
+    void step_frame();
+
+    /**
+     * @brief Changes the current scene
+     *
+     * This function changes the current scene to the new scene along with resetting the frame counter, start time, and pause state
+     *
+     * @param new_scene The new scene to change to
+     */
+    void change_scene(const std::function<void()> &new_scene);
+
+    // Scene variables: variables that are meant for individual scenes
+    // 2D Scene Variables
+
+    /**
+     * @brief The speed coefficient of the triangles in the 2D triangle test scene
+     */
     float two_d_triangle_test_speed_coef = 1;
-    bool two_d_triangle_test_is_paused = false;
+
+    // 3D Scene Variables
 
     // Scenes
+
+    // 2D Scenes
+
+    /**
+     * @brief Class storing rendering data for all the 2D scenes
+     */
+    TwoDScenes two_d_scenes;
 
     /**
      * @brief The start menu scene

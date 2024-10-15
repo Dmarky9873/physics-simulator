@@ -1,6 +1,6 @@
 #include "scene_manager.h"
 
-SceneManager::SceneManager(GLFWwindow *window)
+SceneManager::SceneManager(GLFWwindow *window, float frame_duration)
 {
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -16,10 +16,33 @@ SceneManager::SceneManager(GLFWwindow *window)
 
     // Set the current scene to the start menu
     body = std::bind(&SceneManager::sc_start_menu, this);
+
+    // Sets the frame step (basically the fps)
+    frame_dur = frame_duration;
+}
+
+void SceneManager::measure_fps()
+{
+    // Measure the frames per second by counting the frames and dividing by the time since last reset
+    std::cout << "FPS: " << (frame / (glfwGetTime() - start_time)) << std::endl;
+}
+
+void SceneManager::step_frame()
+{
+    // Calculate the time since the last frame change
+    float delta_time = glfwGetTime() - prev_time;
+
+    // If the time since the last frame change is greater than the desired frame duration, change the frame
+    if (delta_time >= frame_dur)
+    {
+        // Set the previous time to the current time and increment the frame
+        prev_time = glfwGetTime();
+        frame++;
+    }
 }
 
 // This should be called every frame in main loop
-void SceneManager::show()
+void SceneManager::show(bool show_fps)
 {
     // Configure ImGui style
     ImGui::StyleColorsDark();
@@ -31,10 +54,23 @@ void SceneManager::show()
 
     // Draw the current scene
     body();
+    if (show_fps)
+        measure_fps();
+
+    if (is_paused)
+        start_time = glfwGetTime();
+    else
+        step_frame();
 
     // Render everything at the end of the frame so imgui is always on top
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData()); // Renders the ImGui draw data
+}
+
+void SceneManager::change_scene(const std::function<void()> &new_scene)
+{
+    body = new_scene;
+    reset();
 }
 
 // Scenes
@@ -49,8 +85,8 @@ void SceneManager::sc_start_menu()
 
     if (ImGui::Button("2D"))
     {
-        // Change the scene if 2D is clicked
-        body = std::bind(&SceneManager::sc_2d_selector, this);
+        // Change the scene if 2D button is clicked
+        change_scene(std::bind(&SceneManager::sc_2d_selector, this));
     }
 
     // End the ImGui window
@@ -63,18 +99,36 @@ void SceneManager::sc_2d_triangle_test()
     ImGui::Begin("Triangle Test");
     if (ImGui::Button("Back"))
     {
-        // Change the scene
-        body = std::bind(&SceneManager::sc_2d_selector, this);
+        // Change the scene to the 2D selector if the back button is clicked
+        change_scene(std::bind(&SceneManager::sc_2d_selector, this));
     }
 
     // Slider for speed of triangle movement
-    ImGui::SliderFloat("Speed Coefficient", &two_d_triangle_test_speed_coef, 0.1f, 10.0f);
-    ImGui::Checkbox("Pause & Reset", &two_d_triangle_test_is_paused);
+    if (ImGui::SliderFloat("Speed Coefficient", &two_d_triangle_test_speed_coef, 0.1f, 10.0f))
+    {
+        // Reset and pause the frame if the speed is changed
+        frame = 0;
+    }
+    ImGui::Checkbox("Pause", &is_paused);
 
-    // Render triangles
-    sc_2d_triangle_test_render(two_d_triangle_test_speed_coef, two_d_triangle_test_is_paused);
+    // Reset button
+    ImGui::SameLine();
+    if (ImGui::Button("Reset"))
+    {
+        frame = 0;
+        start_time = glfwGetTime();
+    }
 
     ImGui::End(); // End the ImGui window
+    // Render triangles under the ImGui window
+    two_d_scenes.sc_2d_triangle_test_render(two_d_triangle_test_speed_coef, frame, frame_dur);
+}
+
+void SceneManager::reset()
+{
+    frame = 0;
+    is_paused = false;
+    start_time = glfwGetTime();
 }
 
 void SceneManager::sc_2d_selector()
@@ -84,7 +138,7 @@ void SceneManager::sc_2d_selector()
     if (ImGui::Button("Back"))
     {
         // Change the scene if user wants to go back
-        body = std::bind(&SceneManager::sc_start_menu, this);
+        change_scene(std::bind(&SceneManager::sc_start_menu, this));
     }
 
     // General UI elements
@@ -93,7 +147,7 @@ void SceneManager::sc_2d_selector()
     if (ImGui::Button("Triangle Test"))
     {
         // Change the scene if user wants to see the triangle test
-        body = std::bind(&SceneManager::sc_2d_triangle_test, this);
+        change_scene(std::bind(&SceneManager::sc_2d_triangle_test, this));
     }
 
     // End the ImGui window
