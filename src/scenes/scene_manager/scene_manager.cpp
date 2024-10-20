@@ -44,6 +44,10 @@ void SceneManager::step_frame()
 // This should be called every frame in main loop
 void SceneManager::show(bool show_fps)
 {
+    // Set the background color
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
     // Configure ImGui style
     ImGui::StyleColorsDark();
 
@@ -124,6 +128,37 @@ void SceneManager::sc_2d_triangle_test()
     two_d_scenes.sc_2d_triangle_test_render(two_d_triangle_test_speed_coef, frame, frame_dur);
 }
 
+void SceneManager::sc_2d_projectile_motion()
+{
+    // Create your ImGui window and UI elements
+    ImGui::Begin("Projectile Motion");
+    if (ImGui::Button("Back"))
+    {
+        // Change the scene to the 2D selector if the back button is clicked
+        change_scene(std::bind(&SceneManager::sc_2d_selector, this));
+    }
+
+    // Slider for speed of triangle movement
+    if (ImGui::SliderFloat("Initial Velocity", &two_d_projectile_motion_initial_velocity, 0.1f, 10.0f))
+    {
+        // Reset and pause the frame if the speed is changed
+        frame = 0;
+    }
+    ImGui::Checkbox("Pause", &is_paused);
+
+    // Reset button
+    ImGui::SameLine();
+    if (ImGui::Button("Reset"))
+    {
+        frame = 0;
+        start_time = glfwGetTime();
+    }
+
+    ImGui::End(); // End the ImGui window
+    // Render triangles under the ImGui window
+    two_d_scenes.sc_2d_projectile_motion_render(two_d_projectile_motion_initial_velocity, frame, frame_dur);
+}
+
 void SceneManager::reset()
 {
     frame = 0;
@@ -148,6 +183,11 @@ void SceneManager::sc_2d_selector()
     {
         // Change the scene if user wants to see the triangle test
         change_scene(std::bind(&SceneManager::sc_2d_triangle_test, this));
+    }
+    else if (ImGui::Button("Projectile Motion"))
+    {
+        // Change the scene if user wants to see the projectile motion
+        change_scene(std::bind(&SceneManager::sc_2d_projectile_motion, this));
     }
 
     // End the ImGui window

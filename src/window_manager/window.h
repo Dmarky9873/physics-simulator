@@ -15,7 +15,7 @@ public:
      * @param height The height of the window
      * @param title The title of the window
      */
-    GLFWwindow *createWindow(int width, int height, const char *title);
+    GLFWwindow *createWindow(int width, int height, const char *title, bool resizable = false);
 
     /**
      * @brief Terminates GLFW and cleans up resources.
@@ -30,7 +30,7 @@ public:
     /**
      * @brief The default height of the window
      */
-    static const unsigned int DEFAULT_HEIGHT = 600;
+    static const unsigned int DEFAULT_HEIGHT = 700;
 
     /**
      * @brief The title of the window

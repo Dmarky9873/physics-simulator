@@ -40,3 +40,90 @@ void TwoDScenes::sc_2d_triangle_test_render(float speed_coef, int frame, float f
     inline_color_renderer.set_vertices(vertices, {trans1, trans2, trans3});
     inline_color_renderer.render(false);
 }
+
+void TwoDScenes::sc_2d_projectile_motion_render(float initial_velocity, int frame, float frame_duration)
+{
+    std::vector<std::vector<float>>
+        vertices = {
+            // Wall
+            {
+                // position
+                -0.5f,
+                -1.0f,
+                0.0f,
+                //  Colors
+                153.0f / 255.0f,
+                76.0f / 255.0f,
+                0.0f / 255.0f,
+                //  position
+                -1.0f,
+                -1.0f,
+                0.0f,
+                //  Colors
+                153.0f / 255.0f,
+                76.0f / 255.0f,
+                0.0f / 255.0f,
+                //  position
+                -1.0f,
+                0.0f,
+                0.0f,
+                //  Colors
+                153.0f / 255.0f,
+                76.0f / 255.0f,
+                0.0f / 255.0f},
+            {
+                // position
+                -1.0f,
+                0.0f,
+                0.0f,
+                //  Colors
+                153.0f / 255.0f,
+                76.0f / 255.0f,
+                0.0f / 255.0f,
+                // position
+                -0.5f,
+                0.0f,
+                0.0f,
+                //  Colors
+                153.0f / 255.0f,
+                76.0f / 255.0f,
+                0.0f / 255.0f,
+                -0.5f,
+                -1.0f,
+                0.0f,
+                //  Colors
+                153.0f / 255.0f,
+                76.0f / 255.0f,
+                0.0f / 255.0f,
+            },
+            //  Projectile Initial position
+            {
+                // position
+                -0.75f,
+                0.0f,
+                0.0f,
+                //  Colors
+                255.0f / 255.0f,
+                255.0f / 255.0f,
+                255.0f / 255.0f,
+                // position
+                -0.5f,
+                0.0f,
+                0.0f,
+                //  Colors
+                255.0f / 255.0f,
+                255.0f / 255.0f,
+                255.0f / 255.0f,
+                // position
+                -0.75f,
+                0.25f,
+                0.0f,
+                //  Colors
+                255.0f / 255.0f,
+                255.0f / 255.0f,
+                255.0f / 255.0f,
+            }};
+    // Renders the triangles
+    inline_color_renderer.set_vertices(vertices, {blank_translation, blank_translation, blank_translation});
+    inline_color_renderer.render(false);
+}

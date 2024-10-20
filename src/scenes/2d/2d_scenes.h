@@ -23,7 +23,11 @@ public:
      */
     void sc_2d_triangle_test_render(float speed_coef, int frame, float frame_duration);
 
+    void sc_2d_projectile_motion_render(float initial_velocity, int frame, float frame_duration);
+
 private:
+    glm::mat4 blank_translation = glm::mat4(1.0f);
+
     /**
      * @brief The renderer for the 2D scenes
      */

@@ -3,7 +3,7 @@
 
 const char *WindowManager::DEFAULT_TITLE = "Physics Sim";
 
-GLFWwindow *WindowManager::createWindow(int width, int height, const char *title)
+GLFWwindow *WindowManager::createWindow(int width, int height, const char *title, bool resizable)
 {
     // Initialize GLFW
     if (!glfwInit())
@@ -17,6 +17,7 @@ GLFWwindow *WindowManager::createWindow(int width, int height, const char *title
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // For macOS compatibility
+    glfwWindowHint(GLFW_RESIZABLE, resizable);
 
     // Create the window
     GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
@@ -38,7 +39,8 @@ GLFWwindow *WindowManager::createWindow(int width, int height, const char *title
     }
 
     // Update viewport size when the window is resized
-    glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    if (resizable)
+        glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
     return window;
 }

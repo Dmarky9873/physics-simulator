@@ -105,6 +105,8 @@ private:
      */
     float two_d_triangle_test_speed_coef = 1;
 
+    float two_d_projectile_motion_initial_velocity = 1;
+
     // 3D Scene Variables
 
     // Scenes
@@ -138,6 +140,8 @@ private:
      * This scene is a test scene for general 2D rendering
      */
     void sc_2d_triangle_test();
+
+    void sc_2d_projectile_motion();
 };
 
 #endif

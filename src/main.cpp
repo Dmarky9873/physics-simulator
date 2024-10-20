@@ -12,7 +12,7 @@
 int main()
 {
     WindowManager window_manager;
-    GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE);
+    GLFWwindow *window = window_manager.createWindow(WindowManager::DEFAULT_WIDTH, WindowManager::DEFAULT_HEIGHT, WindowManager::DEFAULT_TITLE, false);
     SceneManager scene_manager = SceneManager(window, ONE_HUNDRED_TWENTY_FPS);
 
     if (!window)
@@ -22,10 +22,6 @@ int main()
 
     while (!glfwWindowShouldClose(window))
     {
-        // Set the background color
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
-
         // Input
         // Closes the window if the escape key is pressed
         if (InputManager::is_key_pressed(window, GLFW_KEY_ESCAPE))
