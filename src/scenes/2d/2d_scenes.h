@@ -26,9 +26,21 @@ public:
      */
     void sc_2d_triangle_test_render(float speed_coef, int frame, float frame_duration);
 
+    /**
+     * @brief Renders a 2D projectile motion scene
+     *
+     * @param initial_angle The initial angle of the projectile
+     * @param gravity The gravitational acceleration of the projectile
+     * @param initial_velocity The initial velocity of the projectile
+     * @param frame The current frame counter of the program
+     * @param frame_duration The duration of a frame in seconds (1 / fps)
+     */
     void sc_2d_projectile_motion_render(float initial_angle, float gravity, float initial_velocity, int frame, float frame_duration);
 
 private:
+    /**
+     * @brief A blank translation matrix
+     */
     glm::mat4 blank_translation = glm::mat4(1.0f);
 
     /**

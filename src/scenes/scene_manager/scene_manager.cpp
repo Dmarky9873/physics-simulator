@@ -136,7 +136,7 @@ void SceneManager::draw_angle_circle(ImDrawList *draw_list, ImVec2 center, float
     // Calculate the end point of the arrow based on the angle
     ImVec2 arrowEnd = ImVec2(
         center.x + radius * cos(angle),
-        center.y + radius * sin(angle));
+        center.y + radius * -sin(angle));
 
     // Draw the arrow (a line from the center to the calculated endpoint)
     draw_list->AddLine(center, arrowEnd, IM_COL32(255, 255, 255, 255), 2.0f);
