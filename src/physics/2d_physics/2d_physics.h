@@ -6,7 +6,7 @@
 class TwoDPhysics
 {
 public:
-    struct Displacement : protected CoreMath::Vector2
+    struct Displacement : public CoreMath::Vector2
     {
     public:
         /**
@@ -25,7 +25,7 @@ public:
         float get_distance_miles() { return get_magnitude() / 1609.34f; };
     };
 
-    struct Velocity : protected CoreMath::Vector2
+    struct Velocity : public CoreMath::Vector2
     {
     public:
         /**
@@ -44,7 +44,7 @@ public:
         float get_speed_miles_per_hour() { return get_magnitude() * 2.23694f; };
     };
 
-    struct Acceleration : protected CoreMath::Vector2
+    struct Acceleration : public CoreMath::Vector2
     {
     public:
         /**
@@ -61,6 +61,13 @@ public:
          * @brief The acceleration of the velocity in mph^2.
          */
         float get_abs_acceleration_miles_per_hour_squared() { return get_magnitude() * 8036.8f; };
+    };
+
+    struct KinematicEquations
+    {
+        Velocity calculate_final_velocity(Velocity initial_velocity, Acceleration acceleration, float time);
+
+        Displacement calculate_displacement(Velocity initial_velocity, Acceleration acceleration, float time);
     };
 };
 

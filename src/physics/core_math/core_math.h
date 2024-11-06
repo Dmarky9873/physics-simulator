@@ -65,6 +65,13 @@ public:
          */
         void add_vector2(Vector2 velocity);
 
+        /**
+         * @brief Multiplies the vector by a scalar.
+         *
+         * @param scalar The scalar to multiply by.
+         */
+        void multiply_scalar(float scalar);
+
     private:
         /**
          * @brief The magnitude of the vector.

@@ -8,6 +8,9 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 #include "../../graphics/renderer/inline_color/inline_color_renderer.h"
+#include "../../window_manager/window.h"
+#include "objects/object2d.h"
+#include "../../physics/2d_physics/2d_physics.h"
 
 class TwoDScenes
 {
@@ -32,6 +35,7 @@ private:
      * @brief The renderer for the 2D scenes
      */
     InlineColorRenderer inline_color_renderer;
+    void render(std::vector<Object2D>, bool is_wireframe = false);
 };
 
 #endif

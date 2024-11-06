@@ -43,87 +43,139 @@ void TwoDScenes::sc_2d_triangle_test_render(float speed_coef, int frame, float f
 
 void TwoDScenes::sc_2d_projectile_motion_render(float initial_velocity, int frame, float frame_duration)
 {
-    std::vector<std::vector<float>>
-        vertices = {
-            // Wall
-            {
-                // position
-                -0.5f,
-                -1.0f,
-                0.0f,
-                //  Colors
-                153.0f / 255.0f,
-                76.0f / 255.0f,
-                0.0f / 255.0f,
-                //  position
-                -1.0f,
-                -1.0f,
-                0.0f,
-                //  Colors
-                153.0f / 255.0f,
-                76.0f / 255.0f,
-                0.0f / 255.0f,
-                //  position
-                -1.0f,
-                0.0f,
-                0.0f,
-                //  Colors
-                153.0f / 255.0f,
-                76.0f / 255.0f,
-                0.0f / 255.0f},
-            {
-                // position
-                -1.0f,
-                0.0f,
-                0.0f,
-                //  Colors
-                153.0f / 255.0f,
-                76.0f / 255.0f,
-                0.0f / 255.0f,
-                // position
-                -0.5f,
-                0.0f,
-                0.0f,
-                //  Colors
-                153.0f / 255.0f,
-                76.0f / 255.0f,
-                0.0f / 255.0f,
-                -0.5f,
-                -1.0f,
-                0.0f,
-                //  Colors
-                153.0f / 255.0f,
-                76.0f / 255.0f,
-                0.0f / 255.0f,
-            },
-            //  Projectile Initial position
-            {
-                // position
-                -0.75f,
-                0.0f,
-                0.0f,
-                //  Colors
-                255.0f / 255.0f,
-                255.0f / 255.0f,
-                255.0f / 255.0f,
-                // position
-                -0.5f,
-                0.0f,
-                0.0f,
-                //  Colors
-                255.0f / 255.0f,
-                255.0f / 255.0f,
-                255.0f / 255.0f,
-                // position
-                -0.75f,
-                0.25f,
-                0.0f,
-                //  Colors
-                255.0f / 255.0f,
-                255.0f / 255.0f,
-                255.0f / 255.0f,
-            }};
+    Object2D projectile({
+        {
+            // position
+            -0.75f,
+            0.0f,
+            0.0f,
+            //  Colors
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            // position
+            -0.5f,
+            0.0f,
+            0.0f,
+            //  Colors
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            // position
+            -0.75f,
+            0.25f,
+            0.0f,
+            //  Colors
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+        },
+        {
+            // position
+            -0.75f,
+            0.25f,
+            0.0f,
+            //  Colors
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+
+            // position
+            -0.5f,
+            0.25f,
+            0.0f,
+            //  Colors
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+
+            // position
+            -0.5f,
+            0.0f,
+            0.0f,
+            //  Colors
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+            255.0f / 255.0f,
+        },
+    });
+    Object2D wall({
+        {// position
+         -0.5f,
+         -1.0f,
+         0.0f,
+         //  Colors
+         153.0f / 255.0f,
+         76.0f / 255.0f,
+         0.0f / 255.0f,
+         //  position
+         -1.0f,
+         -1.0f,
+         0.0f,
+         //  Colors
+         153.0f / 255.0f,
+         76.0f / 255.0f,
+         0.0f / 255.0f,
+         //  position
+         -1.0f,
+         0.0f,
+         0.0f,
+         //  Colors
+         153.0f / 255.0f,
+         76.0f / 255.0f,
+         0.0f / 255.0f},
+        {
+            // position
+            -1.0f,
+            0.0f,
+            0.0f,
+            //  Colors
+            153.0f / 255.0f,
+            76.0f / 255.0f,
+            0.0f / 255.0f,
+            // position
+            -0.5f,
+            0.0f,
+            0.0f,
+            //  Colors
+            153.0f / 255.0f,
+            76.0f / 255.0f,
+            0.0f / 255.0f,
+            -0.5f,
+            -1.0f,
+            0.0f,
+            //  Colors
+            153.0f / 255.0f,
+            76.0f / 255.0f,
+            0.0f / 255.0f,
+        },
+    });
+    TwoDPhysics::Displacement displacement;
+    displacement.set_magnitude(0.3);
+    displacement.set_angle(45);
+    projectile.translate(displacement);
+
+    std::vector<Object2D> objects = {wall, projectile};
+    render(objects);
+}
+
+void TwoDScenes::render(std::vector<Object2D> objects, bool is_wireframe)
+{
+    std::vector<std::vector<float>> vertices;
+    std::vector<glm::mat4> translations;
+
+    for (Object2D object : objects)
+    {
+        std::vector<std::vector<float>> object_vertices = object.get_vertices();
+        vertices.insert(vertices.end(), object_vertices.begin(), object_vertices.end());
+
+        for (glm::mat4 translation_matrix : object.get_translation_matrix())
+        {
+            translations.push_back(translation_matrix);
+        }
+    }
+
     // Renders the triangles
-    inline_color_renderer.set_vertices(vertices, {blank_translation, blank_translation, blank_translation});
-    inline_color_renderer.render(false);
+    inline_color_renderer.set_vertices(vertices, translations);
+    inline_color_renderer.render(is_wireframe);
 }

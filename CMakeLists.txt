@@ -30,6 +30,7 @@ add_executable(physics_simulator
     # Scenes
     src/scenes/scene_manager/scene_manager.cpp
     src/scenes/2d/2d_scenes.cpp
+    src/scenes/2d/objects/object2d.cpp
 )
 
 

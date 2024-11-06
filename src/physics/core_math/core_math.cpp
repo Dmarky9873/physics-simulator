@@ -10,3 +10,8 @@ void CoreMath::Vector2::add_vector2(Vector2 velocity)
     set_magnitude(magnitude);
     set_angle(angle);
 }
+
+void CoreMath::Vector2::multiply_scalar(float scalar)
+{
+    set_magnitude(get_magnitude() * scalar);
+}
