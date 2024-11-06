@@ -41,7 +41,7 @@ void TwoDScenes::sc_2d_triangle_test_render(float speed_coef, int frame, float f
     inline_color_renderer.render(false);
 }
 
-void TwoDScenes::sc_2d_projectile_motion_render(float initial_velocity, int frame, float frame_duration)
+void TwoDScenes::sc_2d_projectile_motion_render(float initial_angle, float gravity, float initial_velocity, int frame, float frame_duration)
 {
     Object2D projectile({
         {
@@ -150,9 +150,17 @@ void TwoDScenes::sc_2d_projectile_motion_render(float initial_velocity, int fram
             0.0f / 255.0f,
         },
     });
-    TwoDPhysics::Displacement displacement;
-    displacement.set_magnitude(0.3);
-    displacement.set_angle(45);
+    TwoDPhysics::Acceleration a;
+    a.set_magnitude(gravity);
+    a.set_angle(270.0f);
+    float t = frame * frame_duration;
+
+    TwoDPhysics::Velocity v_i;
+    v_i.set_magnitude(initial_velocity);
+    v_i.set_angle(initial_angle);
+
+    TwoDPhysics::Displacement displacement = TwoDPhysics::KinematicEquations::calculate_displacement(v_i, a, t);
+
     projectile.translate(displacement);
 
     std::vector<Object2D> objects = {wall, projectile};

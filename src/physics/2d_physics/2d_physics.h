@@ -65,9 +65,9 @@ public:
 
     struct KinematicEquations
     {
-        Velocity calculate_final_velocity(const Velocity initial_velocity, const Acceleration acceleration, float time);
+        static Velocity calculate_final_velocity(const Velocity initial_velocity, const Acceleration acceleration, float time);
 
-        Displacement calculate_displacement(const Velocity initial_velocity, const Acceleration acceleration, float time);
+        static Displacement calculate_displacement(const Velocity initial_velocity, const Acceleration acceleration, float time);
     };
 };
 

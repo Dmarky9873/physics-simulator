@@ -105,7 +105,7 @@ private:
      */
     float two_d_triangle_test_speed_coef = 1;
 
-    float two_d_projectile_motion_initial_velocity = 1;
+    float two_d_projectile_motion_initial_velocity = 0.1f;
 
     // 3D Scene Variables
 

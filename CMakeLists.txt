@@ -16,6 +16,10 @@ add_executable(physics_simulator
     src/graphics/renderer/basic/basic_renderer.cpp
     src/graphics/renderer/inline_color/inline_color_renderer.cpp
 
+    # Physics/Math
+    src/physics/2d_physics/2d_physics.cpp
+    src/physics/core_math/core_math.cpp
+
     # Dear ImGui core source files
     include/imgui/imgui_demo.cpp
     include/imgui/imgui_draw.cpp

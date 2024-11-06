@@ -156,7 +156,7 @@ void SceneManager::sc_2d_projectile_motion()
 
     ImGui::End(); // End the ImGui window
     // Render triangles under the ImGui window
-    two_d_scenes.sc_2d_projectile_motion_render(two_d_projectile_motion_initial_velocity, frame, frame_dur);
+    two_d_scenes.sc_2d_projectile_motion_render(45.0f, 9.8f, two_d_projectile_motion_initial_velocity, frame, frame_dur);
 }
 
 void SceneManager::reset()
