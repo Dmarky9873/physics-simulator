@@ -128,6 +128,20 @@ void SceneManager::sc_2d_triangle_test()
     two_d_scenes.sc_2d_triangle_test_render(two_d_triangle_test_speed_coef, frame, frame_dur);
 }
 
+void SceneManager::draw_angle_circle(ImDrawList *draw_list, ImVec2 center, float radius, float angle)
+{
+    // Draw the circle outline
+    draw_list->AddCircle(center, radius, IM_COL32(255, 255, 255, 255), 64, 2.0f);
+
+    // Calculate the end point of the arrow based on the angle
+    ImVec2 arrowEnd = ImVec2(
+        center.x + radius * cos(angle),
+        center.y + radius * sin(angle));
+
+    // Draw the arrow (a line from the center to the calculated endpoint)
+    draw_list->AddLine(center, arrowEnd, IM_COL32(255, 255, 255, 255), 2.0f);
+}
+
 void SceneManager::sc_2d_projectile_motion()
 {
     // Create your ImGui window and UI elements
@@ -144,6 +158,12 @@ void SceneManager::sc_2d_projectile_motion()
         // Reset and pause the frame if the speed is changed
         frame = 0;
     }
+
+    if (ImGui::SliderFloat("Gravitational Acceleration", &two_d_projectile_motion_gravitational_acceleration, 1.0f, 20.0f))
+    {
+        // Reset and pause the frame if the speed is changed
+        frame = 0;
+    }
     ImGui::Checkbox("Pause", &is_paused);
 
     // Reset button
@@ -153,10 +173,26 @@ void SceneManager::sc_2d_projectile_motion()
         frame = 0;
         start_time = glfwGetTime();
     }
+    ImGui::NewLine();
+    ImDrawList *draw_list = ImGui::GetWindowDrawList();
+    ImVec2 center = ImGui::GetCursorScreenPos();
+    center.x += 50; // Adjust as needed for positioning
+    center.y += 70;
+    float radius = 40.0f;
+
+    // Angle in radians for the direction of the arrow
+    if (ImGui::SliderFloat("Launch Angle", &two_d_projectile_motion_launch_angle, 0.0f, 360.0f))
+    {
+        // Reset and pause the frame if the speed is changed
+        frame = 0;
+    }
+
+    // Draw the direction circle with an arrow
+    draw_angle_circle(draw_list, center, radius, two_d_projectile_motion_launch_angle * M_PI / 180.0f);
 
     ImGui::End(); // End the ImGui window
     // Render triangles under the ImGui window
-    two_d_scenes.sc_2d_projectile_motion_render(45.0f, 9.8f, two_d_projectile_motion_initial_velocity, frame, frame_dur);
+    two_d_scenes.sc_2d_projectile_motion_render(two_d_projectile_motion_launch_angle, two_d_projectile_motion_gravitational_acceleration, two_d_projectile_motion_initial_velocity, frame, frame_dur);
 }
 
 void SceneManager::reset()

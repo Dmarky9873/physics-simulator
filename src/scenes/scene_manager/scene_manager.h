@@ -105,7 +105,11 @@ private:
      */
     float two_d_triangle_test_speed_coef = 1;
 
-    float two_d_projectile_motion_initial_velocity = 0.1f;
+    float two_d_projectile_motion_initial_velocity = 1.0f;
+
+    float two_d_projectile_motion_gravitational_acceleration = 9.81f;
+
+    float two_d_projectile_motion_launch_angle = 0.0f;
 
     // 3D Scene Variables
 
@@ -142,6 +146,9 @@ private:
     void sc_2d_triangle_test();
 
     void sc_2d_projectile_motion();
+
+    // 2D Scene Elements
+    void draw_angle_circle(ImDrawList *draw_list, ImVec2 center, float radius, float angle);
 };
 
 #endif
