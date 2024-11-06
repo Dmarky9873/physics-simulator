@@ -17,3 +17,21 @@ TwoDPhysics::Velocity TwoDPhysics::KinematicEquations::calculate_final_velocity(
 
     return final_velocity;
 }
+
+TwoDPhysics::Displacement TwoDPhysics::KinematicEquations::calculate_displacement(Velocity initial_velocity, Acceleration acceleration, float time)
+{
+    TwoDPhysics::Displacement displacement;
+
+    Velocity v_i = initial_velocity;
+    Acceleration a = acceleration;
+
+    v_i.multiply_scalar(time);
+
+    a.multiply_scalar(0.5 * pow(time, 2));
+
+    displacement.add_vector2(v_i);
+
+    displacement.add_vector2(a);
+
+    return displacement;
+}
